@@ -6,11 +6,16 @@ bootstrap-events
 
 - - -
 
-__NOTE:__ _This is still experimental code and hasn't yet been published to
-npm._
+__NOTE:__ _This is still experimental code._
 
 Bootstraps events based on the directory tree and found modules' exported
 methods.
+
+## Installing
+You can install this module through:
+```
+npm install --save bootstrap-events
+```
 
 ## Usage
 ```javascript
