@@ -1,0 +1,48 @@
+{
+  "name": "bootstrap-events",
+  "version": "0.0.1",
+  "description": "Bootstraps events based on the directory tree and found modules' exported methods.",
+  "main": "lib/index.js",
+  "scripts": {
+    "test": "jshint lib/*.js test/*.js && mocha --require blanket -R mocha-spec-cov-alt"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/yamadapc/node-bootstrap-events.git"
+  },
+  "keywords": [
+    "events",
+    "bootstrap",
+    "organization",
+    "listener",
+    "event"
+  ],
+  "author": "Pedro Tacla Yamada",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/yamadapc/node-bootstrap-events/issues"
+  },
+  "homepage": "https://github.com/yamadapc/node-bootstrap-events",
+  "devDependencies": {
+    "blanket": "^1.1.6",
+    "coveralls": "^2.11.1",
+    "mocha": "^1.20.1",
+    "mocha-make-stub": "^2.0.1",
+    "mocha-spec-cov-alt": "^0.1.1",
+    "should": "^4.0.4"
+  },
+  "config": {
+    "blanket": {
+      "data-cover-never": [
+        "test",
+        "node_modules"
+      ],
+      "pattern": "lib",
+      "spec-cov": {
+        "threshold": 80,
+        "localThreshol": 80,
+        "lcovOutput": "lcov"
+      }
+    }
+  }
+}
