@@ -1,5 +1,10 @@
 bootstrap-events
 ================
+[![Build Status](https://travis-ci.org/yamadapc/node-bootstrap-events.svg?branch=master)](https://travis-ci.org/yamadapc/node-bootstrap-events)
+[![devDependency Status](https://david-dm.org/yamadapc/node-bootstrap-events/dev-status.svg)](https://david-dm.org/yamadapc/node-bootstrap-events#info=devDependencies)
+[![Coverage Status](https://coveralls.io/repos/yamadapc/node-bootstrap-events/badge.png)](https://coveralls.io/r/yamadapc/node-bootstrap-events)
+
+- - -
 
 __NOTE:__ _This is still experimental code and hasn't yet been published to
 npm._
