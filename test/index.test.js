@@ -13,7 +13,8 @@ describe('bootstrapEvents', function() {
     makeStub('walk', bootstrapEvents, '_walk', function() {
       return [
         __dirname + '/something/here.js',
-        __dirname + '/something/strange/there.js'
+        __dirname + '/something/strange/there.js',
+        __dirname + '/something/ignored.js'
       ];
     });
 
@@ -45,7 +46,9 @@ describe('bootstrapEvents', function() {
     it('registers events based on modules and their methods', function() {
       var emitter = new events.EventEmitter();
       var targetDir = __dirname;
-      bootstrapEvents(emitter, targetDir);
+      bootstrapEvents(emitter, targetDir, {
+        ignore: /igno.*/
+      });
 
       emitter.listeners('something.here.some_method')
         .should.have.lengthOf(1);
@@ -54,6 +57,8 @@ describe('bootstrapEvents', function() {
       emitter.listeners('something.strange.there.some_other_method')
         .should.have.lengthOf(1);
       emitter.listeners('something.here._should_be_ignored')
+        .should.have.lengthOf(0);
+      emitter.listeners('something.ignored')
         .should.have.lengthOf(0);
 
       emitter.listeners('something.here.some_method')[0]
@@ -65,7 +70,7 @@ describe('bootstrapEvents', function() {
     });
   });
 
-  describe('.walk(dir)', function() {
+  describe('._walk(dir)', function() {
     // top-level
     // |--file1
     // |--file2
@@ -112,6 +117,43 @@ describe('bootstrapEvents', function() {
         'top-level/dir1/dir2/file5',
         'top-level/dir1/file4',
       ]);
+    });
+  });
+
+  describe('._matches(pred, value)', function() {
+    it('works with Function predicates', function() {
+      var pred = function(value) {
+        return value === 'something';
+      };
+
+      bootstrapEvents._matches(pred, 'something').should.be.ok;
+      bootstrapEvents._matches(pred, 'else').should.not.be.ok;
+    });
+
+    it('works with RegExp predicates', function() {
+      var pred = /Regular Expressions are [^bad]+/;
+
+      bootstrapEvents._matches(pred, 'Regular Expressions are ok').should.be.ok;
+      bootstrapEvents._matches(pred, 'Regular Expressions are ')
+        .should.not.be.ok;
+      bootstrapEvents._matches(pred, 'Regular Expressions are bad')
+        .should.not.be.ok;
+    });
+
+    it('works with arrays of predicates', function() {
+      var called = 0;
+      var pred = [
+        /[0-9]+/,
+        function() { called += 1; return true; },
+        1773
+      ];
+
+      bootstrapEvents._matches(pred, 10).should.not.be.ok;
+      called.should.equal(1);
+      bootstrapEvents._matches(pred, 'asdf').should.not.be.ok;
+      called.should.equal(1);
+      bootstrapEvents._matches(pred, 1773).should.be.ok;
+      called.should.equal(2);
     });
   });
 });

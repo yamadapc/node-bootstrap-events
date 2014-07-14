@@ -40,6 +40,8 @@ Bootstraps a directories modules methods recursivelly into an event emitter.
 
 * **EventEmitter** *emitter* The EventEmitter to attach listeners to
 * **String** *targetDir* The directory to start the search in
+* **Object** *[options]* An options object
+* **Function|Mixed|RegExp|Array** *[options.ignore]* A file ignore pattern
 
 #### Return:
 
@@ -73,6 +75,20 @@ Recursively walks a directory and returns paths to all found files.
 #### Return:
 
 * **Array.<String>** paths All the found files' paths
+
+### `_matches(pred, value)`
+
+Checks if a file matches a predicate, value, regexp or Array of any of the
+preceding.
+
+#### Params:
+
+* **Function|Mixed|RegExp|Array** *pred*
+* **Mixed** *value*
+
+#### Return:
+
+* **Boolean** matches
 
 ## License
 
