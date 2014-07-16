@@ -19,18 +19,19 @@ describe('bootstrapEvents', function() {
     });
 
     before(function() {
+      this.wildcard_method = function() {};
       this.some_method = function() {};
       this.some_other_method = function() {};
       this.some_nested_method = function() {};
 
       this.spies = {};
-      this.spies[__dirname + '/something/here.js'] = {
-        some_method: this.some_method,
-        _should_be_ignored: function() {},
-        property: "shouldn\'t make us crash",
-        nested: {
-          some_nested_method: this.some_nested_method
-        }
+      this.spies[__dirname + '/something/here.js'] = this.wildcard_method;
+      
+      this.wildcard_method.some_method = this.some_method;
+      this.wildcard_method._should_be_ignored = function() {};
+      this.wildcard_method.property = "shouldn\'t make us crash";
+      this.wildcard_method.nested = {
+        some_nested_method: this.some_nested_method
       };
 
       this.spies[__dirname + '/something/strange/there.js'] = {
@@ -50,6 +51,8 @@ describe('bootstrapEvents', function() {
         ignore: /igno.*/
       });
 
+      emitter.listeners('something.here.*')
+        .should.have.lengthOf(1);
       emitter.listeners('something.here.some_method')
         .should.have.lengthOf(1);
       emitter.listeners('something.here.nested.some_nested_method')
@@ -61,6 +64,8 @@ describe('bootstrapEvents', function() {
       emitter.listeners('something.ignored')
         .should.have.lengthOf(0);
 
+      emitter.listeners('something.here.*')[0]
+        .should.equal(this.wildcard_method);
       emitter.listeners('something.here.some_method')[0]
         .should.equal(this.some_method);
       emitter.listeners('something.here.nested.some_nested_method')[0]

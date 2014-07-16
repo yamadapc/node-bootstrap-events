@@ -1,6 +1,6 @@
 {
   "name": "bootstrap-events",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Bootstraps events based on the directory tree and found modules' exported methods.",
   "main": "lib/index.js",
   "scripts": {

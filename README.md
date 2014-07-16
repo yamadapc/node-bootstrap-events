@@ -42,6 +42,7 @@ Bootstraps a directories modules methods recursivelly into an event emitter.
 * **String** *targetDir* The directory to start the search in
 * **Object** *[options]* An options object
 * **Function|Mixed|RegExp|Array** *[options.ignore]* A file ignore pattern
+* **Boolean** *[options.moduleWildcards=true]* Whether to set functions
 
 #### Return:
 
